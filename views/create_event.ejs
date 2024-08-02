@@ -1,0 +1,92 @@
+<%- include('partials/header') %>
+
+<main class="form-container">
+  <div class="form-box form-box-small">
+    <h2>Create Event</h2>
+    <form action="/create_event" method="post">
+      <div class="form-group">
+        <label for="name">Event Name:</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+      <div class="form-group">
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" required>
+      </div>
+      <div class="form-group">
+        <label for="time">Time:</label>
+        <input type="time" id="time" name="time" required>
+      </div>
+      <div class="form-group">
+        <label for="location">Location:</label>
+        <input type="text" id="location" name="location" required>
+      </div>
+      <div class="form-group">
+        <label for="ticket_price">Ticket Price:</label>
+        <input type="number" step="0.01" id="ticket_price" name="ticket_price" required>
+      </div>
+      <div class="form-group">
+        <label for="image_url">Image URL:</label>
+        <input type="text" id="image_url" name="image_url" placeholder="/images/image4.jpg" required>
+      </div>
+      <button type="submit" class="btn">Create Event</button>
+    </form>
+  </div>
+</main>
+
+<%- include('partials/footer') %>
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    overflow-y: auto; /* Allow vertical scrolling */
+  }
+  .form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 80px); /* Adjust height to allow scrolling */
+    overflow-y: auto; /* Allow vertical scrolling */
+  }
+  .form-box {
+    background-color: #f9f9f9;
+    padding: 10px; /* Reduce padding */
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px; /* Adjust this value to make the form smaller */
+  }
+  .form-box h2 {
+    margin-bottom: 10px; /* Reduce margin */
+  }
+  .form-group {
+    margin-bottom: 10px; /* Reduce margin */
+  }
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  .form-group input, .form-group textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  .btn {
+    display: inline-block;
+    padding: 8px 16px; /* Reduce padding */
+    background-color: #28a745;
+    color: white;
+    text-align: center;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .btn:hover {
+    background-color: #218838;
+  }
+</style>

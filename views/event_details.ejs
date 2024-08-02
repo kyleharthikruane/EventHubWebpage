@@ -1,0 +1,18 @@
+<%- include('partials/header') %>
+
+<main>
+  <h2><%= event.name %></h2>
+  <p><%= event.description %></p>
+  <p><%= event.date %> at <%= event.time %></p>
+  <p>Location: <%= event.location %></p>
+  <p>Ticket Price: $<%= event.ticket_price %></p>
+  <img src="<%= event.image_url %>" alt="<%= event.name %>" style="max-width: 100%; height: auto;">
+  <% if (userId) { %>
+    <a href="/edit_event/<%= event.id %>">Edit</a>
+    <form action="/delete_event/<%= event.id %>" method="post" style="display:inline;">
+      <button type="submit">Delete</button>
+    </form>
+  <% } %>
+</main>
+
+<%- include('partials/footer') %>

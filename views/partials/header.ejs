@@ -1,0 +1,50 @@
+<header>
+  <div class="navbar">
+    <h1>EventHub</h1>
+    <nav>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/create_event">Create Event</a></li>
+        <li><a href="/list_events">List Events</a></li>
+        <% if (typeof userId !== 'undefined' && userId) { %>
+          <li><a href="/profile">Profile (<%= username %>)</a></li>
+          <li><a href="/logout">Logout</a></li>
+        <% } else { %>
+          <li><a href="/login">Login</a></li>
+          <li><a href="/register">Register</a></li>
+        <% } %>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+  }
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    padding: 10px 20px;
+  }
+  .navbar h1 {
+    color: white;
+    margin: 0;
+  }
+  .navbar nav ul {
+    list-style: none;
+    padding: 0;
+  }
+  .navbar nav ul li {
+    display: inline;
+    margin-right: 10px;
+  }
+  .navbar nav ul li a {
+    color: white;
+    text-decoration: none;
+  }
+</style>
+
