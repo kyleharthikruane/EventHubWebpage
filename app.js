@@ -92,17 +92,46 @@ app.get('/list_events', (req, res) => {
 });
 
 app.get('/profile', checkAuth, (req, res) => {
-  const query = 'SELECT * FROM users WHERE id = ?';
-  db.query(query, [req.session.userId], (err, results) => {
+  const userId = req.session.userId;
+
+  const userQuery = 'SELECT * FROM users WHERE id = ?';
+  const eventsQuery = 'SELECT * FROM events WHERE organizer_id = ?';
+
+  db.query(userQuery, [userId], (err, userResults) => {
     if (err) throw err;
+
+    db.query(eventsQuery, [userId], (err, eventResults) => {
+      if (err) throw err;
+
+      if (userResults.length > 0) {
+        res.render('user_profile', {
+          user: userResults[0],
+          events: eventResults,
+          userId: req.session.userId,
+          username: req.session.username
+        });
+      } else {
+        res.status(404).send('User not found');
+      }
+    });
+  });
+});
+
+app.get('/edit_event/:id', checkAuth, (req, res) => {
+  const eventId = req.params.id;
+  const query = 'SELECT * FROM events WHERE id = ?';
+
+  db.query(query, [eventId], (err, results) => {
+    if (err) throw err;
+
     if (results.length > 0) {
-      res.render('user_profile', {
-        user: results[0],
+      res.render('edit_event', {
+        event: results[0],
         userId: req.session.userId,
         username: req.session.username
       });
     } else {
-      res.status(404).send('User not found');
+      res.status(404).send('Event not found');
     }
   });
 });
@@ -153,6 +182,27 @@ app.post('/create_event', checkAuth, (req, res) => {
   db.query(query, [name, description, date, time, location, ticket_price, req.session.userId, image_url], (err, result) => {
     if (err) throw err;
     res.redirect('/list_events');
+  });
+});
+
+app.post('/edit_event/:id', checkAuth, (req, res) => {
+  const eventId = req.params.id;
+  const { name, description, date, time, location, ticket_price, image_url } = req.body;
+  const query = 'UPDATE events SET name = ?, description = ?, date = ?, time = ?, location = ?, ticket_price = ?, image_url = ? WHERE id = ?';
+
+  db.query(query, [name, description, date, time, location, ticket_price, image_url, eventId], (err, result) => {
+    if (err) throw err;
+    res.redirect('/profile');
+  });
+});
+
+app.post('/delete_event/:id', checkAuth, (req, res) => {
+  const eventId = req.params.id;
+  const query = 'DELETE FROM events WHERE id = ?';
+
+  db.query(query, [eventId], (err, result) => {
+    if (err) throw err;
+    res.redirect('/profile');
   });
 });
 

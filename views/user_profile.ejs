@@ -1,9 +1,82 @@
 <%- include('partials/header') %>
 
 <main>
-  <h2>User Profile</h2>
-  <p>Username: <%= user.username %></p>
-  <p>Email: <%= user.email %></p>
+  <div class="profile-container">
+    <h2>User Profile</h2>
+    <p>Username: <%= user.username %></p>
+    <p>Email: <%= user.email %></p>
+
+    <h3>Your Events</h3>
+    <div id="events">
+      <% events.forEach(event => { %>
+        <div class="event-box">
+          <div class="event-details">
+            <h3><%= event.name %></h3>
+            <p><%= event.description %></p>
+            <p><%= event.date %> at <%= event.time %></p>
+            <p>Location: <%= event.location %></p>
+            <p>Ticket Price: $<%= event.ticket_price %></p>
+            <img src="<%= event.image_url %>" alt="<%= event.name %>" style="max-width: 100%; height: auto;">
+            <div class="event-actions">
+              <a href="/edit_event/<%= event.id %>" class="btn">Edit</a>
+              <form action="/delete_event/<%= event.id %>" method="post" style="display:inline;">
+                <button type="submit" class="btn btn-delete">Delete</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      <% }); %>
+    </div>
+  </div>
 </main>
 
 <%- include('partials/footer') %>
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    overflow-y: auto;
+  }
+  main {
+    padding: 20px;
+  }
+  .profile-container {
+    text-align: left;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .event-box {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 20px 0;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  .event-details h3 {
+    margin-top: 0;
+  }
+  .event-actions {
+    margin-top: 10px;
+  }
+  .btn {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #28a745;
+    color: white;
+    text-align: center;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .btn:hover {
+    background-color: #218838;
+  }
+  .btn-delete {
+    background-color: #dc3545;
+  }
+  .btn-delete:hover {
+    background-color: #c82333;
+  }
+</style>
+
